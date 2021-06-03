@@ -1,12 +1,8 @@
 package com.example.hotelservice.controller;
 
-import com.example.hotelservice.model.entity.HotelEntity;
 import com.example.hotelservice.model.entity.RoomEntity;
-import com.example.hotelservice.model.request.HotelCreatedRequest;
-import com.example.hotelservice.model.request.HotelUpdatedRequest;
 import com.example.hotelservice.model.request.RoomCreatedRequest;
 import com.example.hotelservice.model.request.RoomUpdatedRequest;
-import com.example.hotelservice.model.response.HotelResponse;
 import com.example.hotelservice.model.response.RoomResponse;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -16,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/room")
@@ -62,7 +57,7 @@ public interface IRoomController {
       @ApiResponse(responseCode = "404", description = "Not found",
           content = @Content)})
   ResponseEntity<RoomResponse> updateRoom(@PathVariable("room-id") BigInteger roomId,
-                                            @RequestBody RoomUpdatedRequest room);
+                                          @RequestBody RoomUpdatedRequest room);
 
   @DeleteMapping("/{room-id}")
   @ApiResponses(value = {

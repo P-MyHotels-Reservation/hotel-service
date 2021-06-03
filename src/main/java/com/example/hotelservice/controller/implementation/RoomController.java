@@ -6,10 +6,11 @@ import com.example.hotelservice.model.request.RoomUpdatedRequest;
 import com.example.hotelservice.model.response.RoomResponse;
 import com.example.hotelservice.service.RoomService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigInteger;
-import java.util.List;
 
+@RestController
 public class RoomController implements IRoomController {
 
   private final RoomService roomService;

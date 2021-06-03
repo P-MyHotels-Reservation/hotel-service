@@ -1,20 +1,14 @@
-server:
-  port: 8807
-
 spring:
   application:
     name: hotel-service
-  datasource:
-    url: jdbc:postgresql://localhost:5432/guest
-    username: postgres
-    password: 1234
-  flyway:
-    schemas: hotel
-    user: postgres
-    password: 1234
-    enabled: true
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8083/eureka
+  profiles:
+    active: local
+  cloud:
+    config:
+      uri: http://localhost:8888
+      username: root
+      password: root
+      fail-fast: true
+      import:
+        optional:
+          configserver: instead

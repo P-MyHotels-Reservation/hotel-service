@@ -11,9 +11,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 import java.math.BigInteger;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/hotel")
@@ -55,7 +55,7 @@ public interface IHotelController {
    * This controller API is used to update hotel in the database.
    *
    * @param hotelId hotel id
-   * @param hotel hotel updated request {@link HotelUpdatedRequest}
+   * @param hotel   hotel updated request {@link HotelUpdatedRequest}
    * @return HotelResponse {@link HotelResponse}
    */
   @PutMapping("/{hotel-id}")

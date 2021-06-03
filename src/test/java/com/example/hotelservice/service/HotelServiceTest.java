@@ -3,6 +3,7 @@ package com.example.hotelservice.service;
 import com.example.hotelservice.exception.HotelServiceException;
 import com.example.hotelservice.model.entity.HotelEntity;
 import com.example.hotelservice.model.entity.RoomEntity;
+import com.example.hotelservice.model.entity.RoomTypeEntity;
 import com.example.hotelservice.model.request.HotelCreatedRequest;
 import com.example.hotelservice.model.request.HotelUpdatedRequest;
 import com.example.hotelservice.model.response.HotelResponse;
@@ -17,9 +18,6 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigInteger;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -53,20 +51,22 @@ class HotelServiceTest {
 
     roomEntity.setName(NAME);
     roomEntity.setHotel(hotel);
+    roomEntity.setType(RoomTypeEntity.builder().roomType("QUEEN_SUPERIOR_ROOM").build());
 
     hotel.setRoomEntities(List.of(roomEntity));
   }
+
   @Test
   void createHotel_shouldWork() {
     Mockito.when(hotelRepository.save(Mockito.any(HotelEntity.class))).thenReturn(hotel);
-    HotelResponse result  = hotelService.create(HotelCreatedRequest.builder().build());
+    HotelResponse result = hotelService.create(HotelCreatedRequest.builder().build());
     Assertions.assertEquals(NAME, result.getName());
   }
 
   @Test
   void getHotel_shouldWork() {
     Mockito.when(hotelRepository.findById(Mockito.any(BigInteger.class))).thenReturn(Optional.ofNullable(hotel));
-    HotelResponse result  = hotelService.get(new BigInteger(ONE));
+    HotelResponse result = hotelService.get(new BigInteger(ONE));
     Assertions.assertEquals(NAME, result.getName());
   }
 
@@ -80,7 +80,7 @@ class HotelServiceTest {
   void updateHotel_shouldWork() {
     Mockito.when(hotelRepository.findById(Mockito.any(BigInteger.class))).thenReturn(Optional.ofNullable(hotel));
     Mockito.when(hotelRepository.save(Mockito.any(HotelEntity.class))).thenReturn(hotel);
-    HotelResponse result  = hotelService.update(new BigInteger(ONE),
+    HotelResponse result = hotelService.update(new BigInteger(ONE),
         HotelUpdatedRequest.builder().build());
     Assertions.assertEquals(NAME, result.getName());
   }
@@ -89,13 +89,13 @@ class HotelServiceTest {
   void updateHotelNotFoundException_shouldWork() {
     Mockito.when(hotelRepository.findById(Mockito.any(BigInteger.class))).thenReturn(Optional.empty());
     Assertions.assertThrows(HotelServiceException.class, () -> hotelService.update(new BigInteger(ONE)
-        ,HotelUpdatedRequest.builder().build()));
+        , HotelUpdatedRequest.builder().build()));
   }
 
   @Test
   void deleteHotel_shouldWork() {
     Mockito.when(hotelRepository.deleteById(Mockito.any(BigInteger.class))).thenReturn(Optional.ofNullable(hotel));
-    Boolean result  = hotelService.delete(new BigInteger(ONE));
+    Boolean result = hotelService.delete(new BigInteger(ONE));
     Assertions.assertEquals(Boolean.TRUE, result);
   }
 
@@ -107,18 +107,17 @@ class HotelServiceTest {
 
   @Test
   void getHotelList_shouldWork() {
-    List<HotelEntity> hotelResponseList =  List.of(hotel);
+    List<HotelEntity> hotelResponseList = List.of(hotel);
     Mockito.when(hotelRepository.findAll()).thenReturn(hotelResponseList);
-    List<HotelResponse> result  = hotelService.getHotelList();
+    List<HotelResponse> result = hotelService.getHotelList();
     Assertions.assertEquals(List.of(hotelResponse), result);
   }
 
   @Test
   void getRooms_shouldWork() {
-    List<HotelEntity> hotelResponseList =  List.of(hotel);
     Mockito.when(hotelRepository.findById(new BigInteger(ONE))).thenReturn(Optional.ofNullable(hotel));
     List<RoomEntity> rooms = hotel.getRoomEntities();
-    List<RoomResponse> result  = hotelService.getRooms(new BigInteger(ONE));
+    List<RoomResponse> result = hotelService.getRooms(new BigInteger(ONE));
     Assertions.assertEquals(rooms.stream().map(this::toRoomResponse).collect(Collectors.toList()), result);
   }
 
@@ -130,7 +129,7 @@ class HotelServiceTest {
 
   private RoomResponse toRoomResponse(RoomEntity room) {
     return RoomResponse.builder()
-        .id(room.getId())
+        .uuid(room.getUuid())
         .hotelId(room.getHotel().getId())
         .name(room.getName())
         .floor(room.getFloor())

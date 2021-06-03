@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public class HotelServiceException extends RuntimeException {
 
-  HotelErrorResponse hotelErrorResponse;
+  final HotelErrorResponse hotelErrorResponse;
 
   public HotelServiceException(HotelErrorResponse hotelErrorResponse) {
     this.hotelErrorResponse = hotelErrorResponse;

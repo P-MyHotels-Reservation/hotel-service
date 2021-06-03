@@ -22,6 +22,7 @@ public class RoomEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private BigInteger id;
+  private String uuid;
   @ManyToOne(targetEntity = HotelEntity.class)
   @JoinColumn(name = "hotel_id")
   private HotelEntity hotel;
