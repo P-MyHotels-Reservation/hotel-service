@@ -17,9 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.Instant;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -71,7 +70,7 @@ public class RoomServiceImpl implements RoomService {
 
   @Override
   public Boolean delete(BigInteger roomId) {
-    return roomRepository.deleteById(roomId).map(t-> Boolean.TRUE)
+    return roomRepository.deleteById(roomId).map(t -> Boolean.TRUE)
         .orElseThrow(() -> new HotelServiceException(HotelErrorResponse.ROOM_IS_NOT_FOUND));
   }
 
@@ -88,6 +87,7 @@ public class RoomServiceImpl implements RoomService {
 
   private RoomEntity buildRoomEntity(RoomCreatedRequest roomRequest, HotelEntity hotelEntity, RoomTypeEntity roomTypeEntity) {
     return RoomEntity.builder()
+        .uuid(UUID.randomUUID().toString())
         .hotel(hotelEntity)
         .name(roomRequest.getName())
         .floor(roomRequest.getFloor())
@@ -101,7 +101,7 @@ public class RoomServiceImpl implements RoomService {
 
   private RoomResponse convertEntityToResponse(RoomEntity save) {
     return RoomResponse.builder()
-        .id(save.getId())
+        .uuid(save.getUuid())
         .hotelId(save.getHotel().getId())
         .name(save.getName())
         .floor(save.getFloor())

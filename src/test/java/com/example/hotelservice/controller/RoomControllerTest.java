@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.math.BigInteger;
 
 @ExtendWith(SpringExtension.class)
-public class RoomControllerTest {
+class RoomControllerTest {
 
 
   public IRoomController iRoomController;

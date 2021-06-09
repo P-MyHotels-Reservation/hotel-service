@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -24,6 +23,7 @@ public class HotelEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private BigInteger id;
+  private String uuid;
   private HotelStatusConstant status;
   private String address;
   private Instant createdTime;

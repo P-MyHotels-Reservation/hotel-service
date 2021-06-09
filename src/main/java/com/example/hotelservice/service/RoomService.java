@@ -5,7 +5,6 @@ import com.example.hotelservice.model.request.RoomUpdatedRequest;
 import com.example.hotelservice.model.response.RoomResponse;
 
 import java.math.BigInteger;
-import java.util.List;
 
 public interface RoomService {
 

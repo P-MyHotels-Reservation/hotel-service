@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +49,7 @@ public class HotelServiceImpl implements HotelService {
 
   @Override
   public Boolean delete(BigInteger hotelId) {
-    return hotelRepository.deleteById(hotelId).map(t-> Boolean.TRUE)
+    return hotelRepository.deleteById(hotelId).map(t -> Boolean.TRUE)
         .orElseThrow(() -> new HotelServiceException(HotelErrorResponse.HOTEL_IS_NOT_FOUND));
   }
 
@@ -67,12 +64,13 @@ public class HotelServiceImpl implements HotelService {
         .orElseThrow(() -> new HotelServiceException(HotelErrorResponse.HOTEL_IS_NOT_FOUND));
     var rooms = new ArrayList<>(hotelEntity.getRoomEntities());
     return rooms.stream().map(this::toRoomResponse)
-        .sorted(Comparator.comparing(RoomResponse::getId)).collect(Collectors.toList());
+        .sorted(Comparator.comparing(RoomResponse::getPrice)).collect(Collectors.toList());
   }
 
   private RoomResponse toRoomResponse(RoomEntity room) {
     return RoomResponse.builder()
         .id(room.getId())
+        .uuid(room.getUuid())
         .hotelId(room.getHotel().getId())
         .name(room.getName())
         .floor(room.getFloor())
@@ -97,6 +95,7 @@ public class HotelServiceImpl implements HotelService {
 
   private HotelEntity buildGuestEntity(HotelCreatedRequest hotelRequest) {
     return HotelEntity.builder()
+        .uuid(UUID.randomUUID().toString())
         .name(hotelRequest.getName())
         .createdTime(Instant.now())
         .contact(hotelRequest.getContact())
@@ -108,7 +107,7 @@ public class HotelServiceImpl implements HotelService {
 
   private HotelResponse convertEntityToResponse(HotelEntity save) {
     return HotelResponse.builder()
-        .id(save.getId())
+        .uuid(save.getUuid())
         .name(save.getName())
         .address(save.getAddress())
         .contact(save.getContact())

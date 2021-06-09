@@ -75,7 +75,7 @@ class HotelControllerTest {
 
   @Test
   void getHotelListController_shouldWork() {
-    List<HotelResponse> hotelResponseList =  new ArrayList<>();
+    List<HotelResponse> hotelResponseList = new ArrayList<>();
     Mockito.when(hotelService.getHotelList())
         .thenReturn(hotelResponseList);
 
@@ -86,7 +86,7 @@ class HotelControllerTest {
 
   @Test
   void getRoomListController_shouldWork() {
-    List<RoomResponse> roomResponseList =  new ArrayList<>();
+    List<RoomResponse> roomResponseList = new ArrayList<>();
     Mockito.when(hotelService.getRooms(new BigInteger("1")))
         .thenReturn(roomResponseList);
 

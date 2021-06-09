@@ -1,8 +1,6 @@
 package com.example.hotelservice.model.response;
 
 import com.example.hotelservice.constant.RoomStatusConstant;
-import com.example.hotelservice.model.entity.HotelEntity;
-import com.example.hotelservice.model.entity.RoomTypeEntity;
 import lombok.Builder;
 import lombok.Data;
 
@@ -13,6 +11,7 @@ import java.time.Instant;
 @Builder
 public class RoomResponse {
   private BigInteger id;
+  private String uuid;
   private BigInteger hotelId;
   private String name;
   private String floor;
